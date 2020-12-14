@@ -1,0 +1,12 @@
+{
+  "name": "firstNativeApp",
+  "displayName": "First Native App",
+  "expo": {
+    "name": "firstNativeApp",
+    "slug": "firstNativeApp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
