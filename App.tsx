@@ -17,7 +17,12 @@ export default function App() {
             id: Math.random().toString(),
             value: input
         }]);
+        setIsAddMode(false);
     };
+
+    const cancelAddGoalHandler = () => {
+        setIsAddMode(false);
+    }
 
     const removeGoalHandler = (goalId: string) => {
         setCourseGoals(courseGoals => courseGoals.filter(goal => goal.id !== goalId));
@@ -31,6 +36,7 @@ export default function App() {
             />
             <GoalInput
                 addGoalHandler={addGoalHandler}
+                onCancel={cancelAddGoalHandler}
                 visible={isAddMode}
             />
             <FlatList
