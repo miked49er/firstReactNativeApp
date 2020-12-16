@@ -13,6 +13,9 @@ export default function App() {
     const [isAddMode, setIsAddMode] = useState<boolean>(false);
 
     const addGoalHandler = (input: string) => {
+        if (!input && input.trim().length === 0) {
+            return;
+        }
         setCourseGoals(courseGoals => [...courseGoals, {
             id: Math.random().toString(),
             value: input
