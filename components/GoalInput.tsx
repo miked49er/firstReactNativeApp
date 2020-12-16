@@ -3,7 +3,6 @@ import { Button, StyleSheet, TextInput, View, Modal } from 'react-native';
 
 interface IGoalInput {
     addGoalHandler: (input: string) => void;
-    onCancel: () => void;
     visible: boolean;
 }
 
@@ -13,11 +12,6 @@ const GoalInput = (props: IGoalInput) => {
     const goalInputHander = (enteredText: string) => {
         setEnteredGoal(enteredText);
     };
-
-    const addGoalHandler = () => {
-        props.addGoalHandler(enteredGoal);
-        setEnteredGoal('');
-    }
 
     return (
         <Modal visible={props.visible} animationType='slide'>
@@ -29,13 +23,8 @@ const GoalInput = (props: IGoalInput) => {
                     value={enteredGoal}
                 />
                 <Button
-                    title='Cancel'
-                    color='red'
-                    onPress={props.onCancel}
-                />
-                <Button
                     title='ADD'
-                    onPress={addGoalHandler}
+                    onPress={props.addGoalHandler.bind(this, enteredGoal)}
                 />
             </View>
         </Modal>
@@ -44,16 +33,15 @@ const GoalInput = (props: IGoalInput) => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     input: {
         width: '80%',
         borderColor: 'black',
         borderWidth: 1,
-        padding: 10,
-        marginBottom: 10
+        padding: 10
     }
 });
 
