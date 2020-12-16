@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput, View, Modal } from 'react-native';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 
 interface IGoalInput {
     addGoalHandler: (input: string) => void;
-    visible: boolean;
 }
 
 const GoalInput = (props: IGoalInput) => {
@@ -14,20 +13,18 @@ const GoalInput = (props: IGoalInput) => {
     };
 
     return (
-        <Modal visible={props.visible} animationType='slide'>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder='Course Goal'
-                    style={styles.input}
-                    onChangeText={goalInputHander}
-                    value={enteredGoal}
-                />
-                <Button
-                    title='ADD'
-                    onPress={props.addGoalHandler.bind(this, enteredGoal)}
-                />
-            </View>
-        </Modal>
+        <View style={styles.inputContainer}>
+            <TextInput
+                placeholder='Course Goal'
+                style={styles.input}
+                onChangeText={goalInputHander}
+                value={enteredGoal}
+            />
+            <Button
+                title='ADD'
+                onPress={props.addGoalHandler.bind(this, enteredGoal)}
+            />
+        </View>
     );
 };
 
