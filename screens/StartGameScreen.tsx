@@ -12,7 +12,7 @@ const StartGameScreen = (props: IStartGameScreenProps) => {
             <Text style={styles.title}>Start New Game</Text>
             <View style={styles.card}>
                 <Text>Select a Number</Text>
-                <TextInput/>
+                <TextInput style={styles.input}/>
                 <View style={styles.actions}>
                     <Button
                         title='Reset'
@@ -44,6 +44,19 @@ const styles = StyleSheet.create({
         width: 300,
         maxWidth: '80%',
         alignItems: 'center',
+        backgroundColor: 'white',
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowRadius: 6,
+        shadowOpacity: 0.26,
+        elevation: 8,
+        padding: 20,
+        borderRadius: 10
+    },
+    input: {
 
     },
     actions: {
