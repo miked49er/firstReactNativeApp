@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleProp, StyleSheet, View, ViewPropTypes, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 interface ICardProps {
-    children: React.ReactNode;
-    style: StyleProp<ViewStyle>;
+    children?: React.ReactNode;
+    style?: StyleProp<ViewStyle>;
 }
 
 const Card = ({children, style}: ICardProps) => {
@@ -36,7 +36,7 @@ Card.propTypes = {
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
     ]),
-    style: ViewPropTypes.style
+    style: PropTypes.object
 };
 
 export default Card;

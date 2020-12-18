@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import Card from '../components/Card';
 import Theme from '../constants/theme';
+import Input from '../components/Input';
 
 interface IStartGameScreenProps {
 
@@ -14,7 +14,14 @@ const StartGameScreen = (props: IStartGameScreenProps) => {
             <Text style={styles.title}>Start New Game</Text>
             <Card style={styles.card}>
                 <Text>Select a Number</Text>
-                <TextInput style={styles.input}/>
+                <Input
+                    style={styles.input}
+                    blurOnSubmit
+                    autoCapitalize='none'
+                    keyboardType='number-pad'
+                    maxLength={2}
+
+                />
                 <View style={styles.actions}>
                     <View style={styles.button}>
                         <Button
@@ -53,7 +60,6 @@ const styles = StyleSheet.create({
         maxWidth: '80%',
         alignItems: 'center',
     },
-    input: {},
     actions: {
         flexDirection: 'row',
         width: '100%',
@@ -62,6 +68,10 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 100
+    },
+    input: {
+        width: 50,
+        textAlign: 'center'
     }
 });
 
