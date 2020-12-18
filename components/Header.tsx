@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
 
+import Theme from '../constants/theme';
+
 interface IHeaderProps {
     title: string;
 }
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 90,
         paddingTop: 36,
-        backgroundColor: '#f7287b',
+        backgroundColor: Theme.primary,
         alignItems: 'center',
         justifyContent: 'center'
     },

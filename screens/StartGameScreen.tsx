@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 import Card from '../components/Card';
+import Theme from '../constants/theme';
 
 interface IStartGameScreenProps {
 
@@ -15,16 +16,22 @@ const StartGameScreen = (props: IStartGameScreenProps) => {
                 <Text>Select a Number</Text>
                 <TextInput style={styles.input}/>
                 <View style={styles.actions}>
-                    <Button
-                        title='Reset'
-                        onPress={() => {
-                        }}
-                    />
-                    <Button
-                        title='Confirm'
-                        onPress={() => {
-                        }}
-                    />
+                    <View style={styles.button}>
+                        <Button
+                            color={Theme.accent}
+                            title='Reset'
+                            onPress={() => {
+                            }}
+                        />
+                    </View>
+                    <View style={styles.button}>
+                        <Button
+                            color={Theme.primary}
+                            title='Confirm'
+                            onPress={() => {
+                            }}
+                        />
+                    </View>
                 </View>
             </Card>
         </View>
@@ -46,15 +53,16 @@ const styles = StyleSheet.create({
         maxWidth: '80%',
         alignItems: 'center',
     },
-    input: {
-
-    },
+    input: {},
     actions: {
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-between',
         paddingHorizontal: 15
     },
+    button: {
+        width: 100
+    }
 });
 
 StartGameScreen.propTypes = {};
