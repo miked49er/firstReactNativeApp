@@ -10,9 +10,32 @@ interface IStartGameScreenProps {
 
 const StartGameScreen = (props: IStartGameScreenProps) => {
     const [enteredValue, setEnteredValue] = useState('');
+    const [confirmed, setConfirmed] = useState(false);
+    const [selectedNumber, setSelectedNumber] = useState<number>();
 
     const numberInputHandler = (input: string) => {
         setEnteredValue(input.replace(/[^0-9]/g, ''));
+    };
+
+    const resetInputHandler = () => {
+        setEnteredValue('');
+        setConfirmed(false);
+    };
+
+    const confirmInputHandler = () => {
+        const chosenNumber: number = parseInt(enteredValue);
+        if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+            return;
+        }
+        setConfirmed(true);
+        setSelectedNumber(chosenNumber);
+        setEnteredValue('');
+    };
+
+    let confirmedOutput: JSX.Element = <></>;
+
+    if (confirmed) {
+        confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>
     }
 
     return (
@@ -37,20 +60,19 @@ const StartGameScreen = (props: IStartGameScreenProps) => {
                             <Button
                                 color={Theme.accent}
                                 title='Reset'
-                                onPress={() => {
-                                }}
+                                onPress={resetInputHandler}
                             />
                         </View>
                         <View style={styles.button}>
                             <Button
                                 color={Theme.primary}
                                 title='Confirm'
-                                onPress={() => {
-                                }}
+                                onPress={confirmInputHandler}
                             />
                         </View>
                     </View>
                 </Card>
+                {confirmedOutput}
             </View>
         </TouchableWithoutFeedback>
     );
