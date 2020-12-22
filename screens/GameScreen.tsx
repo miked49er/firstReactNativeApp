@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text, Button, Alert } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
@@ -6,6 +6,7 @@ import Card from '../components/Card';
 
 interface IGameScreenProps {
     userChoice: number;
+    onGameOver: (numOfRounds: number) => void;
 }
 
 const generateRandomBetween = (min: number, max: number, exclude: number): number => {
@@ -19,15 +20,22 @@ const generateRandomBetween = (min: number, max: number, exclude: number): numbe
     }
 }
 
-const GameScreen = (props: IGameScreenProps) => {
-    const [currentGuess, setCurrentGuess] = useState<number>(generateRandomBetween(1, 100, props.userChoice));
+const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
+    const [currentGuess, setCurrentGuess] = useState<number>(generateRandomBetween(1, 100, userChoice));
+    const [rounds, setRounds] = useState<number>(0);
     const currentLow = useRef<number>(1);
     const currentHigh = useRef<number>(100);
 
+    useEffect(() => {
+        if (currentGuess === userChoice) {
+            onGameOver(rounds);
+        }
+    }, [currentGuess, userChoice, onGameOver]);
+
     const nextGuessHandler = (direction: number) => {
         if (
-            (direction > 0 && props.userChoice < currentGuess) ||
-            (direction < 0 && props.userChoice > currentGuess)
+            (direction > 0 && userChoice < currentGuess) ||
+            (direction < 0 && userChoice > currentGuess)
         ) {
             Alert.alert('Don\'t lie!', 'You know this is wrong...', [
                 {text: 'Sorry!', style: 'cancel'}
@@ -40,6 +48,7 @@ const GameScreen = (props: IGameScreenProps) => {
             currentHigh.current = currentGuess;
         }
         setCurrentGuess(generateRandomBetween(currentLow.current, currentHigh.current, currentGuess));
+        setRounds(curRounds => curRounds += 1);
     };
 
     return (
@@ -76,7 +85,8 @@ const styles = StyleSheet.create({
 });
 
 GameScreen.propTypes = {
-    userChoice: PropTypes.number.isRequired
+    userChoice: PropTypes.number.isRequired,
+    onGameOver: PropTypes.func.isRequired
 };
 
 export default GameScreen;
