@@ -3,6 +3,7 @@ import { Alert, Button, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, Vi
 import Card from '../components/Card';
 import Theme from '../constants/theme';
 import Input from '../components/Input';
+import NumberContainer from '../components/NumberContainer';
 
 interface IStartGameScreenProps {
 
@@ -25,24 +26,40 @@ const StartGameScreen = (props: IStartGameScreenProps) => {
     const confirmInputHandler = () => {
         const chosenNumber: number = parseInt(enteredValue);
         if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
-            Alert.alert('Invalid Number', 'Number has to be a number between 1 and 99.', [{text: 'Okay', style: 'destructive', onPress: resetInputHandler}]);
+            Alert.alert('Invalid Number', 'Number has to be a number between 1 and 99.', [{
+                text: 'Okay',
+                style: 'destructive',
+                onPress: resetInputHandler
+            }]);
             return;
         }
         setConfirmed(true);
         setSelectedNumber(chosenNumber);
         setEnteredValue('');
+        Keyboard.dismiss();
     };
 
     let confirmedOutput: JSX.Element = <></>;
 
     if (confirmed) {
-        confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>
+        confirmedOutput = (
+            <Card style={styles.summaryContainer}>
+                <Text>You Selected</Text>
+                <NumberContainer>{selectedNumber}</NumberContainer>
+                <Button
+                    title='START GAME'
+                    onPress={() => {}}
+                />
+            </Card>
+        );
     }
 
     return (
-        <TouchableWithoutFeedback onPress={() => {
-            Keyboard.dismiss();
-        }}>
+        <TouchableWithoutFeedback
+            onPress={() => {
+                Keyboard.dismiss();
+            }}
+        >
             <View style={styles.wrapper}>
                 <Text style={styles.title}>Start New Game</Text>
                 <Card style={styles.card}>
@@ -106,6 +123,10 @@ const styles = StyleSheet.create({
     input: {
         width: 50,
         textAlign: 'center'
+    },
+    summaryContainer: {
+        margin: 20,
+        alignItems: 'center'
     }
 });
 
