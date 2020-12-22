@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
 
 import Theme from '../constants/theme';
+import HeaderText from './HeaderText';
 
 interface IHeaderProps {
     title: string;
@@ -11,7 +12,7 @@ interface IHeaderProps {
 const Header = ({title}: IHeaderProps) => {
     return (
         <View style={styles.header}>
-            <Text style={styles.title}>{title}</Text>
+            <HeaderText style={styles.title}>{title}</HeaderText>
         </View>
     );
 };
@@ -26,8 +27,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title: {
-        color: 'black',
-        fontSize: 18
+        color: 'black'
     }
 });
 

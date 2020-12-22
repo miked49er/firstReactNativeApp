@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, Button, Alert } from 'react-native';
+import { Alert, Button, StyleSheet, View } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
+import BodyText from '../components/BodyText';
 
 interface IGameScreenProps {
     userChoice: number;
@@ -53,7 +54,7 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
 
     return (
         <View style={styles.wrapper}>
-            <Text>Opponent's Guess</Text>
+            <BodyText>Opponent's Guess</BodyText>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.btnContainer}>
                 <Button

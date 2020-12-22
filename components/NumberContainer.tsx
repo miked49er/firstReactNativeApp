@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
 
 import Theme from '../constants/theme';
+import BodyText from './BodyText';
 
 interface INumberContainerProps {
     children: React.ReactNode;
@@ -11,7 +12,7 @@ interface INumberContainerProps {
 const NumberContainer = (props: INumberContainerProps) => {
     return (
         <View style={styles.wrapper}>
-            <Text style={styles.number}>{props.children}</Text>
+            <BodyText style={styles.number}>{props.children}</BodyText>
         </View>
     );
 };
