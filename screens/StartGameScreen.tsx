@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Alert, Button, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import Card from '../components/Card';
 import Theme from '../constants/theme';
@@ -6,12 +7,12 @@ import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
 
 interface IStartGameScreenProps {
-
+    onStartGame: Function;
 }
 
 const StartGameScreen = (props: IStartGameScreenProps) => {
-    const [enteredValue, setEnteredValue] = useState('');
-    const [confirmed, setConfirmed] = useState(false);
+    const [enteredValue, setEnteredValue] = useState<string>('');
+    const [confirmed, setConfirmed] = useState<boolean>(false);
     const [selectedNumber, setSelectedNumber] = useState<number>();
 
     const numberInputHandler = (input: string) => {
@@ -48,7 +49,7 @@ const StartGameScreen = (props: IStartGameScreenProps) => {
                 <NumberContainer>{selectedNumber}</NumberContainer>
                 <Button
                     title='START GAME'
-                    onPress={() => {}}
+                    onPress={props.onStartGame.bind(selectedNumber)}
                 />
             </Card>
         );
@@ -130,6 +131,8 @@ const styles = StyleSheet.create({
     }
 });
 
-StartGameScreen.propTypes = {};
+StartGameScreen.propTypes = {
+    onStartGame: PropTypes.func
+};
 
 export default StartGameScreen;
