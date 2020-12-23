@@ -83,8 +83,8 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
                     />
                 </MainButton>
             </Card>
-            <View style={styles.list}>
-                <ScrollView>
+            <View style={styles.listContainer}>
+                <ScrollView contentContainerStyle={styles.list}>
                     {pastGuesses.map((guess: number, i: number) => (
                         renderListItem(guess, pastGuesses.length - i)
                     ))}
@@ -108,18 +108,24 @@ const styles = StyleSheet.create({
         maxWidth: '90%'
     },
     listItem: {
-        borderColor: 'black',
+        borderColor: '#ccc',
         borderWidth: 1,
         padding: 15,
         marginVertical: 10,
         backgroundColor: 'white',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: '60%'
     },
-    list: {
+    listContainer: {
         flex: 1,
         width: '80%'
-    }
+    },
+    list: {
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexGrow: 1
+    },
 });
 
 GameScreen.propTypes = {
