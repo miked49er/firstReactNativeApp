@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Button, StyleSheet, View } from 'react-native';
+import { Alert, Button, ScrollView, StyleSheet, View } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
@@ -24,14 +24,15 @@ const generateRandomBetween = (min: number, max: number, exclude: number): numbe
 }
 
 const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
-    const [currentGuess, setCurrentGuess] = useState<number>(generateRandomBetween(1, 100, userChoice));
-    const [rounds, setRounds] = useState<number>(0);
+    let initialGuess = generateRandomBetween(1, 100, userChoice);
+    const [currentGuess, setCurrentGuess] = useState<number>(initialGuess);
+    const [pastGuesses, setPastGuesses] = useState<number[]>([initialGuess]);
     const currentLow = useRef<number>(1);
     const currentHigh = useRef<number>(100);
 
     useEffect(() => {
         if (currentGuess === userChoice) {
-            onGameOver(rounds);
+            onGameOver(pastGuesses.length);
         }
     }, [currentGuess, userChoice, onGameOver]);
 
@@ -46,12 +47,13 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
             return;
         }
         if (direction > 0) {
-            currentLow.current = currentGuess;
+            currentLow.current = currentGuess + 1;
         } else {
             currentHigh.current = currentGuess;
         }
-        setCurrentGuess(generateRandomBetween(currentLow.current, currentHigh.current, currentGuess));
-        setRounds(curRounds => curRounds += 1);
+        let nextNumber = generateRandomBetween(currentLow.current, currentHigh.current, currentGuess);
+        setCurrentGuess(nextNumber);
+        setPastGuesses(curPastGuesses => [nextNumber, ...curPastGuesses]);
     };
 
     return (
@@ -74,6 +76,13 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
                     />
                 </MainButton>
             </Card>
+            <ScrollView>
+                {pastGuesses.map((guess: number) => (
+                    <View key={guess}>
+                        <BodyText>{guess}</BodyText>
+                    </View>
+                ))}
+            </ScrollView>
         </View>
     );
 };
