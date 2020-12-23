@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, Button, Image } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import BodyText from '../components/BodyText';
 import HeaderText from '../components/HeaderText';
 import Theme from '../constants/theme';
+import MainButton from '../components/MainButton';
 
 interface IGameOverScreenProps {
     roundsNum: number;
@@ -23,13 +24,12 @@ const GameOverScreen = ({roundsNum, userNumber, onRestart}: IGameOverScreenProps
                 />
             </View>
             <View style={styles.resultContainer}>
-                <BodyText style={styles.resultText}>Your phone needed <Text style={styles.highlight}>{roundsNum}</Text> rounds to guess the
+                <BodyText style={styles.resultText}>Your phone needed <Text
+                    style={styles.highlight}
+                >{roundsNum}</Text> rounds to guess the
                     number <Text style={styles.highlight}>{userNumber}</Text>.</BodyText>
             </View>
-            <Button
-                title='NEW GAME'
-                onPress={onRestart}
-            />
+            <MainButton onPress={onRestart}>NEW GAME</MainButton>
         </View>
     );
 };

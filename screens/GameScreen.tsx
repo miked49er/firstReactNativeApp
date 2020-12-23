@@ -4,6 +4,7 @@ import { Alert, Button, StyleSheet, View } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
+import MainButton from '../components/MainButton';
 
 interface IGameScreenProps {
     userChoice: number;
@@ -57,14 +58,8 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
             <BodyText>Opponent's Guess</BodyText>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.btnContainer}>
-                <Button
-                    title='LOWER'
-                    onPress={nextGuessHandler.bind(this, -1)}
-                />
-                <Button
-                    title='Higher'
-                    onPress={nextGuessHandler.bind(this, 1)}
-                />
+                <MainButton onPress={nextGuessHandler.bind(this, -1)}>LOWER</MainButton>
+                <MainButton onPress={nextGuessHandler.bind(this, 1)}>Higher</MainButton>
             </Card>
         </View>
     );
@@ -80,8 +75,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 20,
-        width: 300,
-        maxWidth: '80%'
+        width: 400,
+        maxWidth: '90%'
     }
 });
 
