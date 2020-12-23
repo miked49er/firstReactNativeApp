@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Button, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Button, FlatList, ListRenderItemInfo, ScrollView, StyleSheet, View } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
@@ -23,10 +23,16 @@ const generateRandomBetween = (min: number, max: number, exclude: number): numbe
     }
 }
 
-const renderListItem = (value: number, numOfRound: number) => (
-    <View style={styles.listItem} key={value}>
-        <BodyText>#{numOfRound}</BodyText>
-        <BodyText>{value}</BodyText>
+// const renderListItem = (value: number, numOfRound: number) => (
+//     <View style={styles.listItem} key={value}>
+//         <BodyText>#{numOfRound}</BodyText>
+//         <BodyText>{value}</BodyText>
+//     </View>
+// );
+const renderListItem = (listLength: number, itemData: ListRenderItemInfo<number>) => (
+    <View style={styles.listItem}>
+        <BodyText>#{listLength - itemData.index}</BodyText>
+        <BodyText>{itemData.item}</BodyText>
     </View>
 );
 
@@ -84,11 +90,16 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
                 </MainButton>
             </Card>
             <View style={styles.listContainer}>
-                <ScrollView contentContainerStyle={styles.list}>
-                    {pastGuesses.map((guess: number, i: number) => (
-                        renderListItem(guess, pastGuesses.length - i)
-                    ))}
-                </ScrollView>
+                {/*<ScrollView contentContainerStyle={styles.list}>*/}
+                {/*    {pastGuesses.map((guess: number, i: number) => (*/}
+                {/*        renderListItem(guess, pastGuesses.length - i)*/}
+                {/*    ))}*/}
+                {/*</ScrollView>*/}
+                <FlatList
+                    keyExtractor={(item: number) => `${item}`}
+                    data={pastGuesses} renderItem={renderListItem.bind(this, pastGuesses.length)}
+                    contentContainerStyle={styles.list}
+                />
             </View>
         </View>
     );
@@ -115,14 +126,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '60%'
+        width: '100%'
     },
     listContainer: {
         flex: 1,
-        width: '80%'
+        width: '60%'
     },
     list: {
-        alignItems: 'center',
+        // alignItems: 'center',
         justifyContent: 'flex-end',
         flexGrow: 1
     },
