@@ -5,6 +5,7 @@ import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
 import MainButton from '../components/MainButton';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface IGameScreenProps {
     userChoice: number;
@@ -58,8 +59,20 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
             <BodyText>Opponent's Guess</BodyText>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.btnContainer}>
-                <MainButton onPress={nextGuessHandler.bind(this, -1)}>LOWER</MainButton>
-                <MainButton onPress={nextGuessHandler.bind(this, 1)}>Higher</MainButton>
+                <MainButton onPress={nextGuessHandler.bind(this, -1)}>
+                    <MaterialIcons
+                        name='remove'
+                        size={24}
+                        color='white'
+                    />
+                </MainButton>
+                <MainButton onPress={nextGuessHandler.bind(this, 1)}>
+                    <MaterialIcons
+                        name='add'
+                        size={24}
+                        color='white'
+                    />
+                </MainButton>
             </Card>
         </View>
     );

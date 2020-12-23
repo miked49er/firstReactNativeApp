@@ -7,14 +7,11 @@ import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function App() {
     const [userNumber, setUserNumber] = useState<number>();
     const [guessRounds, setGuessRounds] = useState<number>(0);
-    // let [loaded, error] = useFonts({
-    //     'open-sans': OpenSans_400Regular,
-    //     'open-sans-bold': OpenSans_700Bold
-    // });
     let [loaded, error] = useFonts({
         OpenSans_400Regular,
         OpenSans_700Bold
@@ -42,7 +39,7 @@ export default function App() {
     };
 
     let content = <StartGameScreen onStartGame={startGameHandler}/>;
-    
+
     if (userNumber && guessRounds <= 0) {
         content = <GameScreen
             userChoice={userNumber}
