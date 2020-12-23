@@ -16,7 +16,8 @@ const GameOverScreen = ({roundsNum, userNumber, onRestart}: IGameOverScreenProps
             <HeaderText>The Game is Over</HeaderText>
             <View style={styles.imageContainer}>
                 <Image
-                    source={require('../assets/success.png')}
+                    // source={require('../assets/success.png')}
+                    source={{uri: 'https://cdn.pixabay.com/photo/2016/11/08/05/20/adventure-1807524_960_720.jpg'}}
                     style={styles.image}
                 />
             </View>
