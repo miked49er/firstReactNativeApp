@@ -23,6 +23,13 @@ const generateRandomBetween = (min: number, max: number, exclude: number): numbe
     }
 }
 
+const renderListItem = (value: number, numOfRound: number) => (
+    <View style={styles.listItem} key={value}>
+        <BodyText>#{numOfRound}</BodyText>
+        <BodyText>{value}</BodyText>
+    </View>
+);
+
 const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
     let initialGuess = generateRandomBetween(1, 100, userChoice);
     const [currentGuess, setCurrentGuess] = useState<number>(initialGuess);
@@ -76,13 +83,13 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
                     />
                 </MainButton>
             </Card>
-            <ScrollView>
-                {pastGuesses.map((guess: number) => (
-                    <View key={guess}>
-                        <BodyText>{guess}</BodyText>
-                    </View>
-                ))}
-            </ScrollView>
+            <View style={styles.list}>
+                <ScrollView>
+                    {pastGuesses.map((guess: number, i: number) => (
+                        renderListItem(guess, pastGuesses.length - i)
+                    ))}
+                </ScrollView>
+            </View>
         </View>
     );
 };
@@ -99,6 +106,19 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: 400,
         maxWidth: '90%'
+    },
+    listItem: {
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 15,
+        marginVertical: 10,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    list: {
+        flex: 1,
+        width: '80%'
     }
 });
 
