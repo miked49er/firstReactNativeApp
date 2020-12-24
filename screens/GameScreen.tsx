@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Button, Dimensions, FlatList, ListRenderItemInfo, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Dimensions, FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
