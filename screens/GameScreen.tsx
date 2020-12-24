@@ -40,8 +40,22 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
     let initialGuess = generateRandomBetween(1, 100, userChoice);
     const [currentGuess, setCurrentGuess] = useState<number>(initialGuess);
     const [pastGuesses, setPastGuesses] = useState<number[]>([initialGuess]);
+    const [availableDeviceWidth, setAvailableDeviceWidth] = useState<number>(Dimensions.get('window').width);
+    const [availableDeviceHeight, setAvailableDeviceHeight] = useState<number>(Dimensions.get('window').height);
     const currentLow = useRef<number>(1);
     const currentHigh = useRef<number>(100);
+
+    useEffect(() => {
+        const updateLayout = () => {
+            setAvailableDeviceWidth(Dimensions.get('window').width);
+            setAvailableDeviceHeight(Dimensions.get('window').height);
+        };
+
+        Dimensions.addEventListener('change', updateLayout);
+        return () => {
+            Dimensions.removeEventListener('change', updateLayout);
+        }
+    });
 
     useEffect(() => {
         if (currentGuess === userChoice) {
@@ -71,8 +85,40 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
 
     let listContainerStyle = styles.listContainer;
 
-    if (Dimensions.get('window').width <= 350) {
+    if (availableDeviceWidth <= 350) {
         listContainerStyle = styles.listContainerBig;
+    }
+
+    if (availableDeviceHeight < 500) {
+        return (
+            <View style={styles.wrapper}>
+                <BodyText>Opponent's Guess</BodyText>
+                <View style={styles.controls}>
+                    <MainButton onPress={nextGuessHandler.bind(this, -1)}>
+                        <MaterialIcons
+                            name='remove'
+                            size={24}
+                            color='white'
+                        />
+                    </MainButton>
+                    <NumberContainer>{currentGuess}</NumberContainer>
+                    <MainButton onPress={nextGuessHandler.bind(this, 1)}>
+                        <MaterialIcons
+                            name='add'
+                            size={24}
+                            color='white'
+                        />
+                    </MainButton>
+                </View>
+                <View style={listContainerStyle}>
+                    <FlatList
+                        keyExtractor={(item: number) => `${item}`}
+                        data={pastGuesses} renderItem={renderListItem.bind(this, pastGuesses.length)}
+                        contentContainerStyle={styles.list}
+                    />
+                </View>
+            </View>
+        );
     }
 
     return (
@@ -147,6 +193,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         flexGrow: 1
     },
+    controls: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '80%'
+    }
 });
 
 GameScreen.propTypes = {
