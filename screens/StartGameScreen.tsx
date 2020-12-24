@@ -109,8 +109,9 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     },
     card: {
-        width: 300,
-        maxWidth: '80%',
+        width: '80%',
+        minWidth: 300,
+        maxWidth: '95%',
         alignItems: 'center',
     },
     actions: {
