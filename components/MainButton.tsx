@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 import Theme from '../constants/theme';
 
 interface IMainButtonProps {
@@ -9,12 +9,20 @@ interface IMainButtonProps {
 }
 
 const MainButton = ({children, onPress}: IMainButtonProps) => {
+    let ButtonComponent: any = TouchableOpacity;
+
+    if (Platform.OS === 'android' && Platform.Version >= 21) {
+        ButtonComponent = TouchableNativeFeedback;
+    }
+
     return (
-        <TouchableOpacity activeOpacity={0.6} onPress={onPress}>
-            <View style={styles.button}>
-                <Text style={styles.buttonText}>{children}</Text>
-            </View>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+            <ButtonComponent activeOpacity={0.6} onPress={onPress}>
+                <View style={styles.button}>
+                    <Text style={styles.buttonText}>{children}</Text>
+                </View>
+            </ButtonComponent>
+        </View>
     );
 };
 
@@ -30,6 +38,10 @@ const styles = StyleSheet.create({
         fontFamily: 'OpenSans',
         fontWeight: '400',
         fontSize: 18
+    },
+    buttonContainer: {
+        borderRadius: 25,
+        overflow: 'hidden'
     }
 });
 

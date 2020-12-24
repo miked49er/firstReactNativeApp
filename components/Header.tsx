@@ -11,22 +11,35 @@ interface IHeaderProps {
 
 const Header = ({title}: IHeaderProps) => {
     return (
-        <View style={styles.header}>
+        <View
+            style={[
+                styles.headerBase,
+                Platform.select({
+                    ios: styles.headerIOS,
+                    android: styles.headerAndroid
+                })
+            ]}
+        >
             <HeaderText style={styles.title}>{title}</HeaderText>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    header: {
+    headerBase: {
         width: '100%',
         height: 90,
         paddingTop: 36,
-        backgroundColor: Platform.OS === 'android' ? Theme.primary : 'white',
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottomColor: Platform.OS === 'ios' ? '#ccc' : 'transparent',
-        borderBottomWidth: Platform.OS === 'ios' ? 1 : 0,
+    },
+    headerIOS: {
+        backgroundColor: 'white',
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1
+    },
+    headerAndroid: {
+        backgroundColor: Theme.primary
     },
     title: {
         color: Platform.OS === 'ios' ? Theme.primary : 'white',
