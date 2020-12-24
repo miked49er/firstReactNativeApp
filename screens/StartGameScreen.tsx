@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Button, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View, Dimensions } from 'react-native';
+import {
+    Alert,
+    Button,
+    Keyboard,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
+    Dimensions,
+    ScrollView, KeyboardAvoidingView
+} from 'react-native';
 import Card from '../components/Card';
 import Theme from '../constants/theme';
 import Input from '../components/Input';
@@ -55,44 +65,51 @@ const StartGameScreen = (props: IStartGameScreenProps) => {
     }
 
     return (
-        <TouchableWithoutFeedback
-            onPress={() => {
-                Keyboard.dismiss();
-            }}
-        >
-            <View style={styles.wrapper}>
-                <Text style={styles.title}>Start New Game</Text>
-                <Card style={styles.card}>
-                    <BodyText>Select a Number</BodyText>
-                    <Input
-                        style={styles.input}
-                        blurOnSubmit
-                        autoCapitalize='none'
-                        keyboardType='number-pad'
-                        maxLength={2}
-                        onChangeText={numberInputHandler}
-                        value={enteredValue}
-                    />
-                    <View style={styles.actions}>
-                        <View style={styles.button}>
-                            <Button
-                                color={Theme.accent}
-                                title='Reset'
-                                onPress={resetInputHandler}
+        <ScrollView>
+            <KeyboardAvoidingView
+                behavior="position"
+                keyboardVerticalOffset={30}
+            >
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        Keyboard.dismiss();
+                    }}
+                >
+                    <View style={styles.wrapper}>
+                        <Text style={styles.title}>Start New Game</Text>
+                        <Card style={styles.card}>
+                            <BodyText>Select a Number</BodyText>
+                            <Input
+                                style={styles.input}
+                                blurOnSubmit
+                                autoCapitalize='none'
+                                keyboardType='number-pad'
+                                maxLength={2}
+                                onChangeText={numberInputHandler}
+                                value={enteredValue}
                             />
-                        </View>
-                        <View style={styles.button}>
-                            <Button
-                                color={Theme.primary}
-                                title='Confirm'
-                                onPress={confirmInputHandler}
-                            />
-                        </View>
+                            <View style={styles.actions}>
+                                <View style={styles.button}>
+                                    <Button
+                                        color={Theme.accent}
+                                        title='Reset'
+                                        onPress={resetInputHandler}
+                                    />
+                                </View>
+                                <View style={styles.button}>
+                                    <Button
+                                        color={Theme.primary}
+                                        title='Confirm'
+                                        onPress={confirmInputHandler}
+                                    />
+                                </View>
+                            </View>
+                        </Card>
+                        {confirmedOutput}
                     </View>
-                </Card>
-                {confirmedOutput}
-            </View>
-        </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </ScrollView>
     );
 };
 
