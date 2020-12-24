@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Button, FlatList, ListRenderItemInfo, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Button, Dimensions, FlatList, ListRenderItemInfo, ScrollView, StyleSheet, View } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
@@ -69,6 +69,12 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
         setPastGuesses(curPastGuesses => [nextNumber, ...curPastGuesses]);
     };
 
+    let listContainerStyle = styles.listContainer;
+
+    if (Dimensions.get('window').width <= 350) {
+        listContainerStyle = styles.listContainerBig;
+    }
+
     return (
         <View style={styles.wrapper}>
             <BodyText>Opponent's Guess</BodyText>
@@ -89,7 +95,7 @@ const GameScreen = ({onGameOver, userChoice}: IGameScreenProps) => {
                     />
                 </MainButton>
             </Card>
-            <View style={styles.listContainer}>
+            <View style={listContainerStyle}>
                 {/*<ScrollView contentContainerStyle={styles.list}>*/}
                 {/*    {pastGuesses.map((guess: number, i: number) => (*/}
                 {/*        renderListItem(guess, pastGuesses.length - i)*/}
@@ -114,7 +120,7 @@ const styles = StyleSheet.create({
     btnContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 20,
+        marginTop: Dimensions.get('window').height > 600 ? 20 : 5,
         width: 400,
         maxWidth: '90%'
     },
@@ -131,6 +137,10 @@ const styles = StyleSheet.create({
     listContainer: {
         flex: 1,
         width: '60%'
+    },
+    listContainerBig: {
+        flex: 1,
+        width: '80%'
     },
     list: {
         // alignItems: 'center',
