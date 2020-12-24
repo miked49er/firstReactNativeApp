@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useFonts, OpenSans_400Regular, OpenSans_700Bold } from '@expo-google-fonts/open-sans';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { OpenSans_400Regular, OpenSans_700Bold, useFonts } from '@expo-google-fonts/open-sans';
 import AppLoading from 'expo-app-loading';
 
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
-import { MaterialIcons } from '@expo/vector-icons';
 
 export default function App() {
     const [userNumber, setUserNumber] = useState<number>();
@@ -18,7 +17,7 @@ export default function App() {
     });
 
     if (!loaded) {
-        return <AppLoading />;
+        return <AppLoading/>;
     }
     if (error) {
         console.error(error);
@@ -54,10 +53,10 @@ export default function App() {
     }
 
     return (
-        <View style={styles.screen}>
+        <SafeAreaView style={styles.screen}>
             <Header title="Guess a Number"/>
             {content}
-        </View>
+        </SafeAreaView>
     );
 }
 

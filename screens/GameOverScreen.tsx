@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import BodyText from '../components/BodyText';
 import HeaderText from '../components/HeaderText';
 import Theme from '../constants/theme';
@@ -14,24 +14,26 @@ interface IGameOverScreenProps {
 
 const GameOverScreen = ({roundsNum, userNumber, onRestart}: IGameOverScreenProps) => {
     return (
-        <ScrollView>
-            <View style={styles.wrapper}>
-                <HeaderText>The Game is Over</HeaderText>
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../assets/success.png')}
-                        // source={{uri: 'https://cdn.pixabay.com/photo/2016/11/08/05/20/adventure-1807524_960_720.jpg'}}
-                        style={styles.image}
-                    />
+        <SafeAreaView>
+            <ScrollView>
+                <View style={styles.wrapper}>
+                    <HeaderText>The Game is Over</HeaderText>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={require('../assets/success.png')}
+                            // source={{uri: 'https://cdn.pixabay.com/photo/2016/11/08/05/20/adventure-1807524_960_720.jpg'}}
+                            style={styles.image}
+                        />
+                    </View>
+                    <View style={styles.resultContainer}>
+                        <BodyText style={styles.resultText}>Your phone needed
+                            <Text style={styles.highlight}>{roundsNum}</Text> rounds to guess the
+                            number <Text style={styles.highlight}>{userNumber}</Text>.</BodyText>
+                    </View>
+                    <MainButton onPress={onRestart}>NEW GAME</MainButton>
                 </View>
-                <View style={styles.resultContainer}>
-                    <BodyText style={styles.resultText}>Your phone needed
-                        <Text style={styles.highlight}>{roundsNum}</Text> rounds to guess the
-                        number <Text style={styles.highlight}>{userNumber}</Text>.</BodyText>
-                </View>
-                <MainButton onPress={onRestart}>NEW GAME</MainButton>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 
