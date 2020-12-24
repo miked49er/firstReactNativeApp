@@ -4,7 +4,7 @@ import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-nat
 import BodyText from '../components/BodyText';
 import HeaderText from '../components/HeaderText';
 import Theme from '../constants/theme';
-import MainButton from '../components/MainButton';
+import MainButton from '../components/MainButton/MainButton';
 
 interface IGameOverScreenProps {
     roundsNum: number;

@@ -4,7 +4,7 @@ import { Alert, Dimensions, FlatList, ListRenderItemInfo, StyleSheet, View } fro
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
-import MainButton from '../components/MainButton';
+import MainButton from '../components/MainButton/MainButton';
 import { MaterialIcons } from '@expo/vector-icons';
 
 interface IGameScreenProps {

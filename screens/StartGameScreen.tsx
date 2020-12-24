@@ -16,7 +16,7 @@ import Theme from '../constants/theme';
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
 import BodyText from '../components/BodyText';
-import MainButton from '../components/MainButton';
+import MainButton from '../components/MainButton/MainButton';
 
 interface IStartGameScreenProps {
     onStartGame: Function;
