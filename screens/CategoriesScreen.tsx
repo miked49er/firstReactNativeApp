@@ -1,11 +1,9 @@
 import React from 'react';
-import { FlatList, ListRenderItemInfo, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ListRenderItemInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import PropTypes from 'prop-types';
 import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/category';
-
-import Theme from '../constants/theme';
 
 interface ICategoriesScreenProps {
     navigation: NavigationStackProp;
@@ -39,14 +37,6 @@ const CategoriesScreen = (props: ICategoriesScreenProps) => {
             renderItem={renderGridItem}
         />
     );
-};
-
-CategoriesScreen.navigationOptions = {
-    headerTitle: 'Meal Categories',
-    headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Theme.primaryColor : ''
-    },
-    headerTintColor: Platform.OS === 'android' ? 'white' : Theme.primaryColor
 };
 
 const styles = StyleSheet.create({

@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, Button, Platform } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/category';
-import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
-import Theme from '../constants/theme';
 
 interface ICategoryMealsScreenProps {
     navigation: NavigationStackProp;
@@ -42,10 +40,6 @@ CategoryMealsScreen.navigationOptions = (navigationData: {navigation: Navigation
 
     return {
         headerTitle: selectedCategory.title,
-        headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? Theme.primaryColor : ''
-        },
-        headerTintColor: Platform.OS === 'android' ? 'white' : Theme.primaryColor
     }
 };
 
