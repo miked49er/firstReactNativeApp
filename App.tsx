@@ -3,6 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { OpenSans_400Regular, OpenSans_700Bold, useFonts } from '@expo-google-fonts/open-sans';
 import AppLoading from 'expo-app-loading';
 import MealsNavigator from './navigation/MealsNavigator';
+import { enableScreens } from 'react-native-screens';
+
+enableScreens();
 
 export default function App() {
     const [fontsLoaded, error] = useFonts({
