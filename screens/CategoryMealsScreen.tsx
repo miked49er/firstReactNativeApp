@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Platform } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/category';
+import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
+import Theme from '../constants/theme';
 
 interface ICategoryMealsScreenProps {
     navigation: NavigationStackProp;
@@ -32,6 +34,19 @@ const CategoryMealsScreen = (props: ICategoryMealsScreenProps) => {
             />
         </View>
     );
+};
+
+CategoryMealsScreen.navigationOptions = (navigationData: {navigation: NavigationStackProp}) => {
+    const catId: string = navigationData.navigation.getParam('categoryId');
+    const selectedCategory: Category = CATEGORIES.find(cat => cat.id === catId) || new Category('undefined', 'Category Not Found', '#ccc');
+
+    return {
+        headerTitle: selectedCategory.title,
+        headerStyle: {
+            backgroundColor: Platform.OS === 'android' ? Theme.primaryColor : ''
+        },
+        headerTintColor: Platform.OS === 'android' ? 'white' : Theme.primaryColor
+    }
 };
 
 const styles = StyleSheet.create({
