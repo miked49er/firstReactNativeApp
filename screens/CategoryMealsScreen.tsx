@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Button } from 'react-native';
+import { NavigationStackProp } from 'react-navigation-stack';
 
 interface ICategoryMealsScreenProps {
-
+    navigation: NavigationStackProp;
 }
 
 const CategoryMealsScreen = (props: ICategoryMealsScreenProps) => {
     return (
         <View style={styles.wrapper}>
             <Text>The Category Meal Screen</Text>
+            <Button
+                title='Go to Details'
+                onPress={() => {
+                    props.navigation.navigate({routeName: 'MealDetail'});
+                }}
+            />
         </View>
     );
 };
@@ -23,7 +30,7 @@ const styles = StyleSheet.create({
 });
 
 CategoryMealsScreen.propTypes = {
-
+    navigation: PropTypes.object.isRequired
 };
 
 export default CategoryMealsScreen;
