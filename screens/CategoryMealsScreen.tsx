@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, ListRenderItemInfo, StyleSheet, Text, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
-import { CATEGORIES } from '../data/dummy-data';
+import { CATEGORIES, MEALS } from '../data/dummy-data';
 import Category from '../models/category';
+import Meal from '../models/meal';
+import MealItem from '../components/MealItem/MealItem';
 
 interface ICategoryMealsScreenProps {
     navigation: NavigationStackProp;
@@ -12,29 +14,28 @@ interface ICategoryMealsScreenProps {
 const CategoryMealsScreen = (props: ICategoryMealsScreenProps) => {
     const catId: string = props.navigation.getParam('categoryId');
 
-    const selectedCategory: Category = CATEGORIES.find(cat => cat.id === catId) || new Category('undefined', 'Category Not Found', '#ccc');
+    const displayMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+
+    const renderMealItem = (itemData: ListRenderItemInfo<Meal>) => {
+        return (
+            <MealItem
+                meal={itemData.item}
+                onSelect={() => {
+                }}
+            />
+        );
+    };
 
     return (
-        <View style={styles.wrapper}>
-            <Text>The Category Meal Screen</Text>
-            <Text>{selectedCategory.title}</Text>
-            <Button
-                title='Go to Details'
-                onPress={() => {
-                    props.navigation.navigate({routeName: 'MealDetail'});
-                }}
-            />
-            <Button
-                title='Go Back'
-                onPress={() => {
-                    props.navigation.pop();
-                }}
-            />
-        </View>
+        <FlatList
+            data={displayMeals}
+            renderItem={renderMealItem}
+            style={styles.wrapper}
+        />
     );
 };
 
-CategoryMealsScreen.navigationOptions = (navigationData: {navigation: NavigationStackProp}) => {
+CategoryMealsScreen.navigationOptions = (navigationData: { navigation: NavigationStackProp }) => {
     const catId: string = navigationData.navigation.getParam('categoryId');
     const selectedCategory: Category = CATEGORIES.find(cat => cat.id === catId) || new Category('undefined', 'Category Not Found', '#ccc');
 
@@ -45,9 +46,8 @@ CategoryMealsScreen.navigationOptions = (navigationData: {navigation: Navigation
 
 const styles = StyleSheet.create({
     wrapper: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: '100%',
+        padding: 10
     }
 });
 
