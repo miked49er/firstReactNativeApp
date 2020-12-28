@@ -4,6 +4,7 @@ import { NavigationStackProp } from 'react-navigation-stack';
 import PropTypes from 'prop-types';
 import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/category';
+import CategoryGridTile from '../components/CategoryGridTile/CategoryGridTile';
 
 interface ICategoriesScreenProps {
     navigation: NavigationStackProp;
@@ -13,20 +14,17 @@ const CategoriesScreen = (props: ICategoriesScreenProps) => {
 
     const renderGridItem = (itemData: ListRenderItemInfo<Category>) => {
         return (
-            <TouchableOpacity
-                style={styles.gridItem}
-                onPress={() => {
+            <CategoryGridTile
+                title={itemData.item.title}
+                color={itemData.item.color}
+                onSelect={() => {
                     props.navigation.navigate({
                         routeName: 'CategoryMeals', params: {
                             categoryId: itemData.item.id
                         }
                     })
                 }}
-            >
-                <View>
-                    <Text>{itemData.item.title}</Text>
-                </View>
-            </TouchableOpacity>
+            />
         )
     };
 
@@ -45,11 +43,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    gridItem: {
-        flex: 1,
-        margin: 15,
-        height: 150
-    }
 });
 
 CategoriesScreen.propTypes = {
