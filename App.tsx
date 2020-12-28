@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { OpenSans_400Regular, OpenSans_700Bold, useFonts } from '@expo-google-fonts/open-sans';
 import AppLoading from 'expo-app-loading';
+import MealsNavigator from './navigation/MealsNavigator';
 
 export default function App() {
     const [fontsLoaded, error] = useFonts({
@@ -14,17 +15,8 @@ export default function App() {
     }
 
     return (
-        <View style={styles.container}>
-            <Text>Open up App.tsx to start working on your app!</Text>
-        </View>
+        <MealsNavigator/>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
+const styles = StyleSheet.create({});
