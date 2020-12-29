@@ -52,9 +52,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     title: {
-        fontFamily: 'OpenSans',
-        fontWeight: '700',
-        fontSize: 22,
+        fontFamily: 'open-sans-bold',
+        fontSize: 20,
         textAlign: 'right'
     },
     touchable: {

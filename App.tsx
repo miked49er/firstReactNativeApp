@@ -9,8 +9,8 @@ enableScreens();
 
 export default function App() {
     const [fontsLoaded, error] = useFonts({
-        OpenSans_400Regular,
-        OpenSans_700Bold
+        'open-sans': OpenSans_400Regular,
+        'open-sans-bold': OpenSans_700Bold
     });
 
     if (!fontsLoaded) {
