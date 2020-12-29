@@ -8,7 +8,7 @@ interface IDefaultTextProps extends TextProps {
 
 const DefaultText = (props: IDefaultTextProps) => {
     return (
-        <Text {...props} style={[props.style, styles.text]}>{props.children}</Text>
+        <Text {...props} style={[styles.text, props.style]}>{props.children}</Text>
     );
 };
 

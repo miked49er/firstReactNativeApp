@@ -1,29 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, ScrollView, Image } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { MEALS } from '../data/dummy-data';
 import Meal from '../models/meal';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton/CustomHeaderButton';
+import DefaultText from '../components/DefaultText';
 
 interface IMealDetailScreenProps {
     navigation: NavigationStackProp;
+}
+
+interface ListItemParams {
+    children?: React.ReactNode;
+}
+
+const ListItem = (props: ListItemParams) => {
+    return <View style={styles.listItem}><DefaultText>{props.children}</DefaultText></View>
 }
 
 const MealDetailScreen = (props: IMealDetailScreenProps) => {
     const mealId = props.navigation.getParam('mealId');
     const selectedMeal = MEALS.find(meal => meal.id === mealId) || new Meal('404', [], 'Meal Not Found', '', '', '', 0, [], [], false, false, false, false);
     return (
-        <View style={styles.wrapper}>
-            <Text>{selectedMeal.title}</Text>
-            <Button
-                title='Go back to Categories'
-                onPress={() => {
-                    props.navigation.popToTop();
-                }}
+        <ScrollView>
+            <Image
+                style={styles.image}
+                source={{uri: selectedMeal.imageUrl}}
             />
-        </View>
+            <View style={[styles.details]}>
+                <DefaultText>{selectedMeal.duration}m</DefaultText>
+                <DefaultText>{selectedMeal.complexity.toUpperCase()}</DefaultText>
+                <DefaultText>{selectedMeal.affordability.toUpperCase()}</DefaultText>
+            </View>
+            <DefaultText style={styles.title}>Ingredients</DefaultText>
+            {
+                selectedMeal.ingredient.map(ingredient => <ListItem>{ingredient}</ListItem>)
+            }
+            <DefaultText style={styles.title}>Steps</DefaultText>
+            {
+                selectedMeal.steps.map(step => <ListItem>{step}</ListItem>)
+            }
+        </ScrollView>
     );
 };
 
@@ -37,7 +56,8 @@ MealDetailScreen.navigationOptions = (navigationData: { navigation: NavigationSt
                 <Item
                     title='Favorite'
                     iconName='ios-star'
-                    onPress={() => {}}
+                    onPress={() => {
+                    }}
                 />
             </HeaderButtons>
         )
@@ -49,6 +69,27 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    title: {
+        fontFamily: 'open-sans-bold',
+        fontSize: 22,
+        textAlign: 'center'
+    },
+    details: {
+        flexDirection: 'row',
+        padding: 15,
+        justifyContent: 'space-around'
+    },
+    image: {
+        width: '100%',
+        height: 200
+    },
+    listItem: {
+        marginVertical: 10,
+        marginHorizontal: 20,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        padding: 10
     }
 });
 
