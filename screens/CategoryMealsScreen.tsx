@@ -6,6 +6,7 @@ import { CATEGORIES, MEALS } from '../data/dummy-data';
 import Category from '../models/category';
 import Meal from '../models/meal';
 import MealItem from '../components/MealItem/MealItem';
+import MealList from '../components/MealList';
 
 interface ICategoryMealsScreenProps {
     navigation: NavigationStackProp;
@@ -16,26 +17,10 @@ const CategoryMealsScreen = (props: ICategoryMealsScreenProps) => {
 
     const displayMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
 
-    const renderMealItem = (itemData: ListRenderItemInfo<Meal>) => {
-        return (
-            <MealItem
-                meal={itemData.item}
-                onSelect={() => {
-                    props.navigation.navigate({
-                        routeName: 'MealDetail', params: {
-                            mealId: itemData.item.id
-                        }
-                    });
-                }}
-            />
-        );
-    };
-
     return (
-        <FlatList
-            data={displayMeals}
-            renderItem={renderMealItem}
-            style={styles.wrapper}
+        <MealList
+            listData={displayMeals}
+            navigation={props.navigation}
         />
     );
 };
@@ -50,10 +35,7 @@ CategoryMealsScreen.navigationOptions = (navigationData: { navigation: Navigatio
 };
 
 const styles = StyleSheet.create({
-    wrapper: {
-        width: '100%',
-        padding: 10
-    }
+    wrapper: {}
 });
 
 CategoryMealsScreen.propTypes = {

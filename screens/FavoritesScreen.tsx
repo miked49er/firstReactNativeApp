@@ -1,18 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
+import MealList from '../components/MealList';
+import { NavigationStackProp } from 'react-navigation-stack';
+import { MEALS } from '../data/dummy-data';
 
 interface IFavoritesScreenProps {
-
+    navigation: NavigationStackProp;
 }
 
 const FavoritesScreen = (props: IFavoritesScreenProps) => {
+    const favMeals = MEALS.filter(meal => meal.id === 'm1' || meal.id === 'm2');
     return (
-        <View style={styles.wrapper}>
-            <Text>The Favorites Screen</Text>
-        </View>
+        <MealList
+            listData={favMeals}
+            navigation={props.navigation}
+        />
     );
 };
+
+FavoritesScreen.navigationOptions = {
+    headerTitle: 'Your Favorites'
+}
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -23,7 +32,7 @@ const styles = StyleSheet.create({
 });
 
 FavoritesScreen.propTypes = {
-
+    navigation: PropTypes.object.isRequired
 };
 
 export default FavoritesScreen;
