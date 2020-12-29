@@ -12,6 +12,7 @@ import {
 import Meal from '../../models/meal';
 
 import Theme from '../../constants/theme';
+import DefaultText from '../DefaultText';
 
 interface IMealItemProps {
     meal: Meal;
@@ -44,9 +45,9 @@ const MealItem = ({meal, onSelect}: IMealItemProps) => {
                         </ImageBackground>
                     </View>
                     <View style={[styles.mealRow, styles.mealDetail]}>
-                        <Text>{meal.duration}m</Text>
-                        <Text>{meal.complexity.toUpperCase()}</Text>
-                        <Text>{meal.affordability.toUpperCase()}</Text>
+                        <DefaultText>{meal.duration}m</DefaultText>
+                        <DefaultText>{meal.complexity.toUpperCase()}</DefaultText>
+                        <DefaultText>{meal.affordability.toUpperCase()}</DefaultText>
                     </View>
                 </View>
             </Touchable>
