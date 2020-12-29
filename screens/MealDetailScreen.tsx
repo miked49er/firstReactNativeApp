@@ -4,6 +4,8 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { MEALS } from '../data/dummy-data';
 import Meal from '../models/meal';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../components/CustomHeaderButton/CustomHeaderButton';
 
 interface IMealDetailScreenProps {
     navigation: NavigationStackProp;
@@ -11,7 +13,7 @@ interface IMealDetailScreenProps {
 
 const MealDetailScreen = (props: IMealDetailScreenProps) => {
     const mealId = props.navigation.getParam('mealId');
-    const selectedMeal = MEALS.find(meal => meal.id === mealId) || new Meal("404", [], "Meal Not Found", "", "", "", 0, [], [], false, false, false, false);
+    const selectedMeal = MEALS.find(meal => meal.id === mealId) || new Meal('404', [], 'Meal Not Found', '', '', '', 0, [], [], false, false, false, false);
     return (
         <View style={styles.wrapper}>
             <Text>{selectedMeal.title}</Text>
@@ -29,7 +31,16 @@ MealDetailScreen.navigationOptions = (navigationData: { navigation: NavigationSt
     const mealId = navigationData.navigation.getParam('mealId');
     const selectedMeal = MEALS.find(meal => meal.id === mealId);
     return {
-        headerTitle: selectedMeal ? selectedMeal.title : 'Meal Not Found'
+        headerTitle: selectedMeal ? selectedMeal.title : 'Meal Not Found',
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title='Favorite'
+                    iconName='ios-star'
+                    onPress={() => {}}
+                />
+            </HeaderButtons>
+        )
     };
 }
 

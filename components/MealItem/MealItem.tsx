@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: Theme.accentColor,
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        marginVertical: 10
     },
     touchable: {},
     mealRow: {
