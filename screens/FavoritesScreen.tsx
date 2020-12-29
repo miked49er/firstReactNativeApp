@@ -4,6 +4,8 @@ import { StyleSheet, View, Text } from 'react-native';
 import MealList from '../components/MealList';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { MEALS } from '../data/dummy-data';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../components/CustomHeaderButton/CustomHeaderButton';
 
 interface IFavoritesScreenProps {
     navigation: NavigationStackProp;
@@ -19,8 +21,21 @@ const FavoritesScreen = (props: IFavoritesScreenProps) => {
     );
 };
 
-FavoritesScreen.navigationOptions = {
-    headerTitle: 'Your Favorites'
+FavoritesScreen.navigationOptions = (navData: { navigation: any }) => {
+    return {
+        headerTitle: 'Your Favorites',
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName='ios-menu'
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        )
+    }
 }
 
 const styles = StyleSheet.create({

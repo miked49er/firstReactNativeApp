@@ -10,6 +10,10 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import FiltersScreen from '../screens/FiltersScreen';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../components/CustomHeaderButton/CustomHeaderButton';
 
 let defaultNavigationOptions = {
     headerStyle: {
@@ -18,12 +22,7 @@ let defaultNavigationOptions = {
     headerTintColor: Platform.OS === 'android' ? 'white' : Theme.primaryColor
 };
 const MealsNavigator = createStackNavigator({
-    Categories: {
-        screen: CategoriesScreen,
-        navigationOptions: {
-            headerTitle: 'Meal Categories'
-        }
-    },
+    Categories: CategoriesScreen,
     CategoryMeals: CategoryMealsScreen,
     MealDetail: MealDetailScreen,
 }, {
@@ -41,7 +40,7 @@ let tabScreenConfig = {
     Meals: {
         screen: MealsNavigator,
         navigationOptions: {
-            tabBarIcon: (tabInfo: {tintColor: string}) =>
+            tabBarIcon: (tabInfo: { tintColor: string }) =>
                 <Ionicons
                     name='ios-restaurant'
                     size={25}
@@ -53,7 +52,7 @@ let tabScreenConfig = {
     Favorites: {
         screen: FavoritesNavigator,
         navigationOptions: {
-            tabBarIcon: (tabInfo: {tintColor: string}) =>
+            tabBarIcon: (tabInfo: { tintColor: string }) =>
                 <Ionicons
                     name='ios-star'
                     size={25}
@@ -67,13 +66,22 @@ const MealsTabNavigator = Platform.OS === 'android'
     ? createMaterialBottomTabNavigator(tabScreenConfig,
         {
             activeColorLight: 'white',
-            shifting:true
+            shifting: true
         }
     )
     : createBottomTabNavigator(tabScreenConfig, {
         tabBarOptions: {
             activeTintColor: Theme.accentColor
         }
-    })
+    });
 
-export default createAppContainer(MealsTabNavigator);
+const FilterStackNavigator = createStackNavigator({
+    Filters: FiltersScreen
+})
+
+const MainNavigator = createDrawerNavigator({
+    Tabs: MealsTabNavigator,
+    Filters: FilterStackNavigator
+});
+
+export default createAppContainer(MainNavigator);
