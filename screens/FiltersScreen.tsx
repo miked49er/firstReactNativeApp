@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text, Switch, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton/CustomHeaderButton';
 
 import Theme from '../constants/theme';
+import { NavigationStackProp } from 'react-navigation-stack';
 
 interface IFiltersScreenProps {
-
+    navigation: NavigationStackProp;
 }
 
 interface IFilterSwitchProps {
@@ -33,11 +34,26 @@ const FilterSwitch = (props: IFilterSwitchProps) => {
     );
 };
 
-const FiltersScreen = (props: IFiltersScreenProps) => {
+const FiltersScreen = ({navigation}: IFiltersScreenProps) => {
     const [isGlutenFree, setIsGlutenFree] = useState(false);
     const [isLactoseFree, setIsLactoseFree] = useState(false);
     const [isVegan, setIsVegan] = useState(false);
     const [isVegetarian, setIsVegetarian] = useState(false);
+
+    const saveFilters = useCallback(() => {
+        const appliedFilters = {
+            glutenFree: isGlutenFree,
+            lactoseFree: isLactoseFree,
+            vegan: isVegan,
+            vegetarian: isVegetarian
+        };
+        console.log(appliedFilters);
+    }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+
+    useEffect(() => {
+        navigation.setParams({save: saveFilters});
+    }, [saveFilters]);
+
     return (
         <View style={styles.wrapper}>
             <Text style={styles.title}>Available Filters / Restrictions</Text>
@@ -78,6 +94,15 @@ FiltersScreen.navigationOptions = (navData: { navigation: any }) => {
                     }}
                 />
             </HeaderButtons>
+        ),
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName='ios-save'
+                    onPress={navData.navigation.getParam('save')}
+                />
+            </HeaderButtons>
         )
     }
 }
@@ -102,7 +127,7 @@ const styles = StyleSheet.create({
 });
 
 FiltersScreen.propTypes = {
-
+    navigation: PropTypes.object.isRequired
 };
 
 export default FiltersScreen;
