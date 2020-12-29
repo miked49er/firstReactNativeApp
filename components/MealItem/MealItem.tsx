@@ -18,7 +18,7 @@ interface IMealItemProps {
     onSelect: () => void;
 }
 
-const MealItem = ({meal}: IMealItemProps) => {
+const MealItem = ({meal, onSelect}: IMealItemProps) => {
     let Touchable: any = TouchableOpacity;
     if (Platform.OS === 'android' && Platform.Version >= 21) {
         Touchable = TouchableNativeFeedback;
@@ -27,6 +27,7 @@ const MealItem = ({meal}: IMealItemProps) => {
         <View style={styles.mealItem}>
             <Touchable
                 style={styles.touchable}
+                onPress={onSelect}
             >
                 <View>
                     <View style={[styles.mealRow, styles.mealHeader]}>
