@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
@@ -26,6 +26,11 @@ const MealDetailScreen = (props: IMealDetailScreenProps) => {
     const mealId = props.navigation.getParam('mealId');
     let availableMeals = useSelector((state: { meals: MealsState }) => state.meals.meals);
     const selectedMeal = availableMeals.find(meal => meal.id === mealId) || new Meal('404', [], 'Meal Not Found', '', '', '', 0, [], [], false, false, false, false);
+
+    // useEffect(() => {
+    //     props.navigation.setParams({mealTitle: selectedMeal.title});
+    // }, [selectedMeal]);
+
     return (
         <ScrollView>
             <Image
@@ -50,10 +55,9 @@ const MealDetailScreen = (props: IMealDetailScreenProps) => {
 };
 
 MealDetailScreen.navigationOptions = (navigationData: { navigation: NavigationStackProp }) => {
-    const mealId = navigationData.navigation.getParam('mealId');
-    const selectedMeal = MEALS.find(meal => meal.id === mealId);
+    const mealTitle = navigationData.navigation.getParam('mealTitle');
     return {
-        headerTitle: selectedMeal ? selectedMeal.title : 'Meal Not Found',
+        headerTitle: mealTitle || 'Meal Not Found',
         headerRight: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                 <Item
