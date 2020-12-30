@@ -4,6 +4,8 @@ import { StyleSheet, View, Text, FlatList, ListRenderItemInfo } from 'react-nati
 import Meal from '../models/meal';
 import MealItem from './MealItem/MealItem';
 import { NavigationStackProp } from 'react-navigation-stack';
+import { useSelector } from 'react-redux';
+import { MealsState } from '../store/reducers/meals';
 
 interface IMealListProps {
     listData: Meal[];
@@ -11,6 +13,7 @@ interface IMealListProps {
 }
 
 const MealList = (props: IMealListProps) => {
+    const favoriteMeals = useSelector((state: {meals: MealsState}) => state.meals.favoriteMeals);
     const renderMealItem = (itemData: ListRenderItemInfo<Meal>) => {
         return (
             <MealItem
@@ -19,7 +22,8 @@ const MealList = (props: IMealListProps) => {
                     props.navigation.navigate({
                         routeName: 'MealDetail', params: {
                             mealId: itemData.item.id,
-                            mealTitle: itemData.item.title
+                            mealTitle: itemData.item.title,
+                            isFav: favoriteMeals.some(meal => meal.id === itemData.item.id)
                         }
                     });
                 }}
