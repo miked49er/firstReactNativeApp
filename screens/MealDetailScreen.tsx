@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
@@ -7,8 +7,9 @@ import Meal from '../models/meal';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton/CustomHeaderButton';
 import DefaultText from '../components/DefaultText';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MealsState } from '../store/reducers/meals';
+import { toggleFavorite } from '../store/actions/meals';
 
 interface IMealDetailScreenProps {
     navigation: NavigationStackProp;
@@ -27,9 +28,14 @@ const MealDetailScreen = (props: IMealDetailScreenProps) => {
     let availableMeals = useSelector((state: { meals: MealsState }) => state.meals.meals);
     const selectedMeal = availableMeals.find(meal => meal.id === mealId) || new Meal('404', [], 'Meal Not Found', '', '', '', 0, [], [], false, false, false, false);
 
-    // useEffect(() => {
-    //     props.navigation.setParams({mealTitle: selectedMeal.title});
-    // }, [selectedMeal]);
+    const dispatch = useDispatch();
+    const toggleFavorteHandler = useCallback(() => {
+        dispatch(toggleFavorite(mealId))
+    }, [dispatch, mealId]);
+
+    useEffect(() => {
+        props.navigation.setParams({toggleFav: toggleFavorteHandler});
+    }, [toggleFavorteHandler])
 
     return (
         <ScrollView>
@@ -56,6 +62,7 @@ const MealDetailScreen = (props: IMealDetailScreenProps) => {
 
 MealDetailScreen.navigationOptions = (navigationData: { navigation: NavigationStackProp }) => {
     const mealTitle = navigationData.navigation.getParam('mealTitle');
+    const toggleFavorite = navigationData.navigation.getParam('toggleFav');
     return {
         headerTitle: mealTitle || 'Meal Not Found',
         headerRight: () => (
@@ -63,8 +70,7 @@ MealDetailScreen.navigationOptions = (navigationData: { navigation: NavigationSt
                 <Item
                     title='Favorite'
                     iconName='ios-star'
-                    onPress={() => {
-                    }}
+                    onPress={toggleFavorite}
                 />
             </HeaderButtons>
         )
