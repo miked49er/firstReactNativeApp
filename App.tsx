@@ -4,8 +4,16 @@ import { OpenSans_400Regular, OpenSans_700Bold, useFonts } from '@expo-google-fo
 import AppLoading from 'expo-app-loading';
 import MealsNavigator from './navigation/MealsNavigator';
 import { enableScreens } from 'react-native-screens';
+import { combineReducers, createStore } from 'redux';
+import mealsReducer from './store/reducers/meals';
+import { Provider } from 'react-redux';
 
 enableScreens();
+
+let rootReducer = combineReducers({
+    meals: mealsReducer
+});
+const store = createStore(rootReducer);
 
 export default function App() {
     const [fontsLoaded, error] = useFonts({
@@ -18,7 +26,9 @@ export default function App() {
     }
 
     return (
-        <MealsNavigator/>
+        <Provider store={store}>
+            <MealsNavigator/>
+        </Provider>
     );
 }
 
