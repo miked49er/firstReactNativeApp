@@ -34,6 +34,13 @@ const FilterSwitch = (props: IFilterSwitchProps) => {
     );
 };
 
+export interface AppliedFilters {
+    glutenFree: boolean;
+    lactoseFree: boolean;
+    vegan: boolean;
+    vegetarian: boolean;
+}
+
 const FiltersScreen = ({navigation}: IFiltersScreenProps) => {
     const [isGlutenFree, setIsGlutenFree] = useState(false);
     const [isLactoseFree, setIsLactoseFree] = useState(false);
@@ -41,7 +48,7 @@ const FiltersScreen = ({navigation}: IFiltersScreenProps) => {
     const [isVegetarian, setIsVegetarian] = useState(false);
 
     const saveFilters = useCallback(() => {
-        const appliedFilters = {
+        const appliedFilters: AppliedFilters = {
             glutenFree: isGlutenFree,
             lactoseFree: isLactoseFree,
             vegan: isVegan,
