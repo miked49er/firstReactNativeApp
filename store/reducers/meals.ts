@@ -1,7 +1,7 @@
 import Meal from '../../models/meal';
 import { MEALS } from '../../data/dummy-data';
 
-interface MealsState {
+export interface MealsState {
     meals: Meal[],
     filteredMeals: Meal[],
     favoriteMeals: Meal[],

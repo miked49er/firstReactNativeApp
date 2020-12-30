@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, FlatList, ListRenderItemInfo, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
-import { CATEGORIES, MEALS } from '../data/dummy-data';
+import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/category';
-import Meal from '../models/meal';
-import MealItem from '../components/MealItem/MealItem';
 import MealList from '../components/MealList';
+import { useSelector } from 'react-redux';
+import Meal from '../models/meal';
+import { MealsState } from '../store/reducers/meals';
 
 interface ICategoryMealsScreenProps {
     navigation: NavigationStackProp;
@@ -15,7 +16,8 @@ interface ICategoryMealsScreenProps {
 const CategoryMealsScreen = (props: ICategoryMealsScreenProps) => {
     const catId: string = props.navigation.getParam('categoryId');
 
-    const displayMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+    const availableMeals: Meal[] = useSelector((state: { meals: MealsState }) => state.meals.filteredMeals);
+    const displayMeals = availableMeals.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
 
     return (
         <MealList

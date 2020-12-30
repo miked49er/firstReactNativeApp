@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, Button, ScrollView, Image } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { MEALS } from '../data/dummy-data';
 import Meal from '../models/meal';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton/CustomHeaderButton';
 import DefaultText from '../components/DefaultText';
+import { useSelector } from 'react-redux';
+import { MealsState } from '../store/reducers/meals';
 
 interface IMealDetailScreenProps {
     navigation: NavigationStackProp;
@@ -22,7 +24,8 @@ const ListItem = (props: ListItemParams) => {
 
 const MealDetailScreen = (props: IMealDetailScreenProps) => {
     const mealId = props.navigation.getParam('mealId');
-    const selectedMeal = MEALS.find(meal => meal.id === mealId) || new Meal('404', [], 'Meal Not Found', '', '', '', 0, [], [], false, false, false, false);
+    let availableMeals = useSelector((state: { meals: MealsState }) => state.meals.meals);
+    const selectedMeal = availableMeals.find(meal => meal.id === mealId) || new Meal('404', [], 'Meal Not Found', '', '', '', 0, [], [], false, false, false, false);
     return (
         <ScrollView>
             <Image
