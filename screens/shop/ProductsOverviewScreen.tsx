@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, FlatList, ListRenderItemInfo } from 'react-nati
 import { useSelector } from 'react-redux';
 import { ProductState } from '../../store/reducers/products';
 import Product from '../../models/Product';
+import ProductList from '../../components/ProductList/ProductList';
 
 interface IProductsOverviewScreenProps {
 
@@ -11,12 +12,7 @@ interface IProductsOverviewScreenProps {
 const ProductsOverviewScreen = (props: IProductsOverviewScreenProps) => {
     const productList = useSelector((state: { products: ProductState }) => state.products.availableProducts);
     return (
-        <FlatList
-            data={productList}
-            renderItem={(itemData: ListRenderItemInfo<Product>) => (
-                <Text>{itemData.item.title}</Text>
-            )}
-        />
+        <ProductList productList={productList}/>
     );
 };
 
