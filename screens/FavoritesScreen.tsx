@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MealList from '../components/MealList';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton/CustomHeaderButton';
 import { useSelector } from 'react-redux';
 import { MealsState } from '../store/reducers/meals';
+import DefaultText from '../components/DefaultText';
 
 interface IFavoritesScreenProps {
     navigation: NavigationStackProp;
@@ -14,6 +15,15 @@ interface IFavoritesScreenProps {
 
 const FavoritesScreen = (props: IFavoritesScreenProps) => {
     let favMeals = useSelector((state: { meals: MealsState }) => state.meals.favoriteMeals);
+
+    if (favMeals.length === 0 || !favMeals) {
+        return (
+            <View style={styles.wrapper}>
+                <DefaultText>No favorite meals found. Start adding some!</DefaultText>
+            </View>
+        );
+    }
+
     return (
         <MealList
             listData={favMeals}
