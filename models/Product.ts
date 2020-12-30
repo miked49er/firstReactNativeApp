@@ -63,3 +63,5 @@ class Product {
         this._price = value;
     }
 }
+
+export default Product;

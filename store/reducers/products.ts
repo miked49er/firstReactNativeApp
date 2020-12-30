@@ -1,4 +1,5 @@
 import PRODUCTS from '../../data/dummy-data';
+import Product from '../../models/Product';
 
 export interface ProductState {
     availableProducts: Product[],
