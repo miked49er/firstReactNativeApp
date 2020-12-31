@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, FlatList, ListRenderItemInfo } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CartState } from '../../store/reducers/cart';
 import Theme from '../../constants/Theme';
+import ShoppingCartItem, { IShoppingCartItem } from '../../components/ShoppingCartItem/ShoppingCartItem';
 
 interface ICartScreenProps {
 
@@ -10,7 +11,7 @@ interface ICartScreenProps {
 
 const CartScreen = (props: ICartScreenProps) => {
     const {items, totalAmount}: CartState = useSelector(({cart}: { cart: CartState }) => cart);
-    const cartItems = [];
+    const cartItems: IShoppingCartItem[] = [];
     for (const key in items) {
         cartItems.push({
             productId: key,
@@ -34,9 +35,19 @@ const CartScreen = (props: ICartScreenProps) => {
                     }}
                 />
             </View>
-            <View>
-                <Text>CART ITEMS</Text>
-            </View>
+            <FlatList
+                data={cartItems}
+                keyExtractor={item => item.productId}
+                renderItem={(itemData: ListRenderItemInfo<IShoppingCartItem>) => {
+                    return (
+                        <ShoppingCartItem
+                            onRemove={() => {
+                            }}
+                            product={itemData.item}
+                        />
+                    );
+                }}
+            />
         </View>
     );
 };
