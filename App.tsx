@@ -6,11 +6,14 @@ import productsReducer from './store/reducers/products';
 import ShopNavigator from './navigation/ShopNavigator';
 import { OpenSans_400Regular, OpenSans_700Bold, useFonts } from '@expo-google-fonts/open-sans';
 import AppLoading from 'expo-app-loading';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import cartReducer from './store/reducers/cart';
 
 const rootReducer = combineReducers({
-    products: productsReducer
+    products: productsReducer,
+    cart: cartReducer
 });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 export default function App() {
     const [fontsLoaded] = useFonts({

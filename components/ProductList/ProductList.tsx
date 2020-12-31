@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import Product from '../../models/Product';
 import ProductItem from '../ProductItem/ProductItem';
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/actions/cart';
 
 interface IProductListProps {
     navigation: StackNavigationProp;
@@ -10,6 +12,7 @@ interface IProductListProps {
 }
 
 const ProductList = (props: IProductListProps) => {
+    const dispatch = useDispatch();
     return (
         <FlatList
             data={props.productList}
@@ -25,6 +28,7 @@ const ProductList = (props: IProductListProps) => {
                         });
                     }}
                     onAddToCart={() => {
+                        dispatch(addToCart(itemData.item));
                     }}
                 />
             )}

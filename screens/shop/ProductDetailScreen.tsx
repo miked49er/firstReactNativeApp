@@ -2,9 +2,10 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, ScrollView, Button } from 'react-native';
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
 import Product from '../../models/Product';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ProductState } from '../../store/reducers/products';
 import Theme from '../../constants/Theme';
+import { addToCart } from '../../store/actions/cart';
 
 interface IProductDetailScreenProps {
     navigation: StackNavigationProp;
@@ -13,6 +14,7 @@ interface IProductDetailScreenProps {
 const ProductDetailScreen = (props: IProductDetailScreenProps) => {
     const productId: string = props.navigation.getParam('productId');
     const product: Product = useSelector((state: { products: ProductState }) => state.products.availableProducts.find(product => product.id === productId))!;
+    const dispatch = useDispatch();
     return (
         <ScrollView>
             <Image
@@ -24,6 +26,7 @@ const ProductDetailScreen = (props: IProductDetailScreenProps) => {
                     color={Theme.primary}
                     title='Add to Cart'
                     onPress={() => {
+                        dispatch(addToCart(product))
                     }}
                 />
             </View>

@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList, ListRenderItemInfo } from 'react-native';
+import { StyleSheet, View, Text, FlatList, ListRenderItemInfo, Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 import { ProductState } from '../../store/reducers/products';
 import Product from '../../models/Product';
 import ProductList from '../../components/ProductList/ProductList';
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import ShopHeaderButton from '../../components/ShopHeaderButton/ShopHeaderButton';
 
 interface IProductsOverviewScreenProps {
     navigation: StackNavigationProp;
@@ -20,8 +22,21 @@ const ProductsOverviewScreen = (props: IProductsOverviewScreenProps) => {
     );
 };
 
-ProductsOverviewScreen.navigationOptions = {
-    headerTitle: 'All Products'
+ProductsOverviewScreen.navigationOptions = (navData: { navigation: StackNavigationProp }) => {
+    return {
+        headerTitle: 'All Products',
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={ShopHeaderButton}>
+                <Item
+                    title='Cart'
+                    iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+                    onPress={() => {
+                        navData.navigation.navigate('Cart');
+                    }}
+                />
+            </HeaderButtons>
+        )
+    };
 }
 
 const styles = StyleSheet.create({
