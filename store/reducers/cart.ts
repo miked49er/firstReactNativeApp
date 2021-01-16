@@ -1,5 +1,5 @@
 import Product from '../../models/Product';
-import { ADD_TO_CART } from '../actions/cart';
+import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/cart';
 import CartItem from '../../models/CartItem';
 
 export interface CartState {
@@ -10,6 +10,7 @@ export interface CartState {
 export interface CartAction {
     type: string;
     product?: Product;
+    productId?: string;
 }
 
 const initState = {
@@ -39,6 +40,23 @@ const cartReducer = (state: CartState = initState, action: CartAction) => {
                     [addedProduct.id]: new CartItem(cartQuantity, prodPrice, prodTitle, cartSum)
                 },
                 totalAmount: state.totalAmount + prodPrice
+            };
+        case REMOVE_FROM_CART:
+            let item = state.items[action.productId!];
+            const currentQty = item.quantity;
+            let updatedCartItems;
+            if (currentQty > 1) {
+                const updatedCartItem = new CartItem(item.quantity - 1, item.productPrice, item.productTitle, item.sum - item.productPrice);
+                updatedCartItems = {...state.items, [action.productId!]: updatedCartItem};
+            } else {
+                updatedCartItems = {...state.items};
+                delete updatedCartItems[action.productId!];
+            }
+            let totalAmount = state.totalAmount - item.productPrice;
+            return {
+                ...state,
+                items: updatedCartItems,
+                totalAmount: totalAmount > 0 ? totalAmount : 0
             };
         default:
             return state;

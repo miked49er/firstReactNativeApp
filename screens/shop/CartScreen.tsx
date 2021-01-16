@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button, FlatList, ListRenderItemInfo } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CartState } from '../../store/reducers/cart';
 import Theme from '../../constants/Theme';
 import ShoppingCartItem, { IShoppingCartItem } from '../../components/ShoppingCartItem/ShoppingCartItem';
+import { removeFromCart } from '../../store/actions/cart';
 
 interface ICartScreenProps {
 
@@ -21,6 +22,8 @@ const CartScreen = (props: ICartScreenProps) => {
             sum: items[key].sum
         });
     }
+    const dispatch = useDispatch();
+
     return (
         <View style={styles.wrapper}>
             <View style={styles.summary}>
@@ -36,12 +39,13 @@ const CartScreen = (props: ICartScreenProps) => {
                 />
             </View>
             <FlatList
-                data={cartItems}
+                data={cartItems.sort((a: IShoppingCartItem, b: IShoppingCartItem) => a.productId > b.productId ? 1 : -1)}
                 keyExtractor={item => item.productId}
                 renderItem={(itemData: ListRenderItemInfo<IShoppingCartItem>) => {
                     return (
                         <ShoppingCartItem
                             onRemove={() => {
+                                dispatch(removeFromCart(itemData.item.productId));
                             }}
                             product={itemData.item}
                         />
