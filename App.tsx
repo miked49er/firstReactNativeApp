@@ -8,10 +8,12 @@ import { OpenSans_400Regular, OpenSans_700Bold, useFonts } from '@expo-google-fo
 import AppLoading from 'expo-app-loading';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import cartReducer from './store/reducers/cart';
+import ordersReducer from './store/reducers/order';
 
 const rootReducer = combineReducers({
     products: productsReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    orders: ordersReducer
 });
 const store = createStore(rootReducer, composeWithDevTools());
 

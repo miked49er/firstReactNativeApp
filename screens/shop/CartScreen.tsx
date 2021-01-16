@@ -5,6 +5,7 @@ import { CartState } from '../../store/reducers/cart';
 import Theme from '../../constants/Theme';
 import ShoppingCartItem, { IShoppingCartItem } from '../../components/ShoppingCartItem/ShoppingCartItem';
 import { removeFromCart } from '../../store/actions/cart';
+import { addOrder } from '../../store/actions/order';
 
 interface ICartScreenProps {
 
@@ -35,6 +36,7 @@ const CartScreen = (props: ICartScreenProps) => {
                     color={Theme.accent}
                     disabled={cartItems.length === 0}
                     onPress={() => {
+                        dispatch(addOrder(cartItems, totalAmount));
                     }}
                 />
             </View>
