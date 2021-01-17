@@ -1,6 +1,7 @@
 import Product from '../../models/Product';
 import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/cart';
 import CartItem from '../../models/CartItem';
+import { ADD_ORDER } from '../actions/order';
 
 export interface CartState {
     items: { [id: string]: CartItem };
@@ -58,6 +59,8 @@ const cartReducer = (state: CartState = initState, action: CartAction) => {
                 items: updatedCartItems,
                 totalAmount: totalAmount > 0 ? totalAmount : 0
             };
+        case ADD_ORDER:
+            return initState;
         default:
             return state;
     }
