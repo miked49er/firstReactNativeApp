@@ -13,8 +13,8 @@ import Product from '../../models/Product';
 import Theme from '../../constants/Theme';
 
 interface IProductItemProps {
-    onAddToCart: () => void;
-    onViewDetail: () => void;
+    onAddToCart?: () => void;
+    onViewDetail?: () => void;
     product: Product;
 }
 
@@ -39,18 +39,21 @@ const ProductItem = (props: IProductItemProps) => {
                             <Text style={styles.title}>{title}</Text>
                             <Text style={styles.price}>${price.toFixed(2)}</Text>
                         </View>
-                        <View style={styles.btnContainer}>
-                            <Button
-                                title='View Details'
-                                color={Theme.primary}
-                                onPress={props.onViewDetail}
-                            />
-                            <Button
-                                title='To Cart'
-                                color={Theme.primary}
-                                onPress={props.onAddToCart}
-                            />
-                        </View>
+                        {
+                            (props.onViewDetail && props.onAddToCart) &&
+                            <View style={styles.btnContainer}>
+                                <Button
+                                    title='View Details'
+                                    color={Theme.primary}
+                                    onPress={props.onViewDetail}
+                                />
+                                <Button
+                                    title='To Cart'
+                                    color={Theme.primary}
+                                    onPress={props.onAddToCart}
+                                />
+                            </View>
+                        }
                     </View>
                 </Touchable>
             </View>

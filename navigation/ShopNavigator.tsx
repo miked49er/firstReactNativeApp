@@ -9,6 +9,7 @@ import { createAppContainer } from 'react-navigation';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import CartScreen from '../screens/shop/CartScreen';
 import OrdersScreen from '../screens/shop/OrdersScreen';
+import UserProductsScreen from '../screens/user/UserProductsScreen';
 
 let defaultNavigationOptions = {
     headerStyle: {
@@ -54,9 +55,25 @@ const OrdersNavigator = createStackNavigator({
     }
 });
 
+const AdminNavigator = createStackNavigator({
+    UserProducts: UserProductsScreen
+}, {
+    defaultNavigationOptions: defaultNavigationOptions,
+    navigationOptions: {
+        drawerIcon: (drawerConfig: any) => (
+            <Ionicons
+                name={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+                size={23}
+                color={drawerConfig.tintColor}
+            />
+        )
+    }
+});
+
 const ShopNavigator = createDrawerNavigator({
     Products: ProductsNavigator,
-    Orders: OrdersNavigator
+    Orders: OrdersNavigator,
+    Admin: AdminNavigator
 }, {
     contentOptions: {
         activeTintColor: Theme.primary
