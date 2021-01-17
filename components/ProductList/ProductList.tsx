@@ -1,10 +1,11 @@
 import React from 'react';
-import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { Button, FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import Product from '../../models/Product';
 import ProductItem from '../ProductItem/ProductItem';
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../store/actions/cart';
+import Theme from '../../constants/Theme';
 
 interface IProductListProps {
     navigation: StackNavigationProp;
@@ -13,24 +14,36 @@ interface IProductListProps {
 
 const ProductList = (props: IProductListProps) => {
     const dispatch = useDispatch();
+
+    const selectItemHandler = (id: string, title: string) => {
+        props.navigation.navigate({
+            routeName: 'ProductDetail', params: {
+                productId: id,
+                productTitle: title
+            }
+        });
+    }
     return (
         <FlatList
             data={props.productList}
             renderItem={(itemData: ListRenderItemInfo<Product>) => (
                 <ProductItem
                     product={itemData.item}
-                    onViewDetail={() => {
-                        props.navigation.navigate({
-                            routeName: 'ProductDetail', params: {
-                                productId: itemData.item.id,
-                                productTitle: itemData.item.title
-                            }
-                        });
-                    }}
-                    onAddToCart={() => {
-                        dispatch(addToCart(itemData.item));
-                    }}
-                />
+                    onSelect={selectItemHandler.bind(this, itemData.item.id, itemData.item.title)}
+                >
+                    <Button
+                        title='View Details'
+                        color={Theme.primary}
+                        onPress={selectItemHandler.bind(this, itemData.item.id, itemData.item.title)}
+                    />
+                    <Button
+                        title='To Cart'
+                        color={Theme.primary}
+                        onPress={() => {
+                            dispatch(addToCart(itemData.item));
+                        }}
+                    />
+                </ProductItem>
             )}
         />
     );

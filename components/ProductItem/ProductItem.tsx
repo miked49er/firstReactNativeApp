@@ -13,8 +13,8 @@ import Product from '../../models/Product';
 import Theme from '../../constants/Theme';
 
 interface IProductItemProps {
-    onAddToCart?: () => void;
-    onViewDetail?: () => void;
+    children?: React.ReactNode;
+    onSelect: () => void;
     product: Product;
 }
 
@@ -25,7 +25,7 @@ const ProductItem = (props: IProductItemProps) => {
         <View style={styles.wrapper}>
             <View style={styles.touchable}>
                 <Touchable
-                    onPress={props.onViewDetail}
+                    onPress={props.onSelect}
                     useForeground
                 >
                     <View>
@@ -39,21 +39,9 @@ const ProductItem = (props: IProductItemProps) => {
                             <Text style={styles.title}>{title}</Text>
                             <Text style={styles.price}>${price.toFixed(2)}</Text>
                         </View>
-                        {
-                            (props.onViewDetail && props.onAddToCart) &&
-                            <View style={styles.btnContainer}>
-                                <Button
-                                    title='View Details'
-                                    color={Theme.primary}
-                                    onPress={props.onViewDetail}
-                                />
-                                <Button
-                                    title='To Cart'
-                                    color={Theme.primary}
-                                    onPress={props.onAddToCart}
-                                />
-                            </View>
-                        }
+                        <View style={styles.btnContainer}>
+                            {props.children}
+                        </View>
                     </View>
                 </Touchable>
             </View>
