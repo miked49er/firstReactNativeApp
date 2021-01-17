@@ -58,7 +58,7 @@ const cartReducer = (state: CartState = initState, action: CartAction) => {
             return {
                 ...state,
                 items: updatedCartItems,
-                totalAmount: totalAmount > 0 ? totalAmount : 0
+                totalAmount: totalAmount
             };
         case ADD_ORDER:
             return initState;

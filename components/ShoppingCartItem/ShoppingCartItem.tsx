@@ -25,7 +25,7 @@ const ShoppingCartItem = (props: IShoppingCartItemProps) => {
                 <Text style={styles.quantity}>{quantity} </Text><Text style={styles.mainText}>{productTitle}</Text>
             </View>
             <View style={styles.itemData}>
-                <Text style={[styles.mainText, styles.sumText]}>${sum}</Text>
+                <Text style={[styles.mainText, styles.sumText]}>${sum.toFixed(2)}</Text>
                 {
                     props.onRemove &&
                     <Touchable onPress={props.onRemove}>

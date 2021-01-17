@@ -1,36 +1,38 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList, Platform, Button } from 'react-native';
+import { Button, FlatList, Platform, StyleSheet } from 'react-native';
 import { ProductState } from '../../store/reducers/products';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductItem from '../../components/ProductItem/ProductItem';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import ShopHeaderButton from '../../components/ShopHeaderButton/ShopHeaderButton';
 import Theme from '../../constants/Theme';
-import { addToCart } from '../../store/actions/cart';
 import { deleteProduct } from '../../store/actions/products';
+import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
 
 interface IUserProductsScreenProps {
-
+    navigation: StackNavigationProp;
 }
 
 const UserProductsScreen = (props: IUserProductsScreenProps) => {
     const userProducts = useSelector(({products}: { products: ProductState }) => products.userProducts);
     const dispatch = useDispatch();
+
+    const editProductHandler = (id: string) => {
+        props.navigation.navigate('EditProduct', {productId: id});
+    };
+
     return (
         <FlatList
             data={userProducts}
             renderItem={itemData => (
                 <ProductItem
                     product={itemData.item}
-                    onSelect={() => {
-
-                    }}
+                    onSelect={editProductHandler.bind(this, itemData.item.id)}
                 >
                     <Button
                         title='Edit'
                         color={Theme.primary}
-                        onPress={() => {
-                        }}
+                        onPress={editProductHandler.bind(this, itemData.item.id)}
                     />
                     <Button
                         title='Delete'
@@ -58,7 +60,18 @@ UserProductsScreen.navigationOptions = (navData: { navigation: any }) => {
                     }}
                 />
             </HeaderButtons>
-        )
+        ),
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={ShopHeaderButton}>
+                <Item
+                    title='Add'
+                    iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+                    onPress={() => {
+                        navData.navigation.navigate('EditProduct');
+                    }}
+                />
+            </HeaderButtons>
+        ),
     }
 }
 
