@@ -22,9 +22,20 @@ const ProductsOverviewScreen = (props: IProductsOverviewScreenProps) => {
     );
 };
 
-ProductsOverviewScreen.navigationOptions = (navData: { navigation: StackNavigationProp }) => {
+ProductsOverviewScreen.navigationOptions = (navData: { navigation: any }) => {
     return {
         headerTitle: 'All Products',
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={ShopHeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        ),
         headerRight: () => (
             <HeaderButtons HeaderButtonComponent={ShopHeaderButton}>
                 <Item

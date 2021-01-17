@@ -2,7 +2,7 @@ import { ADD_ORDER } from '../actions/order';
 import { Order } from '../../models/Order';
 import { IShoppingCartItem } from '../../components/ShoppingCartItem/ShoppingCartItem';
 
-interface IOrderState {
+export interface IOrderState {
     orders: Order[];
 }
 

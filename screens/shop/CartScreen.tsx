@@ -6,6 +6,7 @@ import Theme from '../../constants/Theme';
 import ShoppingCartItem, { IShoppingCartItem } from '../../components/ShoppingCartItem/ShoppingCartItem';
 import { removeFromCart } from '../../store/actions/cart';
 import { addOrder } from '../../store/actions/order';
+import OrdersScreen from './OrdersScreen';
 
 interface ICartScreenProps {
 
@@ -56,6 +57,10 @@ const CartScreen = (props: ICartScreenProps) => {
             />
         </View>
     );
+};
+
+CartScreen.navigationOptions = {
+    headerTitle: 'Your Cart'
 };
 
 const styles = StyleSheet.create({
