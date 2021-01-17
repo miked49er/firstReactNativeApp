@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Theme from '../../constants/Theme';
 
 interface IShoppingCartItemProps {
-    onRemove: () => void;
+    onRemove?: () => void;
     product: IShoppingCartItem;
 }
 
@@ -26,13 +26,16 @@ const ShoppingCartItem = (props: IShoppingCartItemProps) => {
             </View>
             <View style={styles.itemData}>
                 <Text style={[styles.mainText, styles.sumText]}>${sum}</Text>
-                <Touchable onPress={props.onRemove}>
-                    <Ionicons
-                        name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-                        size={23}
-                        color='red'
-                    />
-                </Touchable>
+                {
+                    props.onRemove &&
+                    <Touchable onPress={props.onRemove}>
+                        <Ionicons
+                            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                            size={23}
+                            color='red'
+                        />
+                    </Touchable>
+                }
             </View>
         </View>
     );

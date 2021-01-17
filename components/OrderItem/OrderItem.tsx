@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import Theme from '../../constants/Theme';
 import { Order } from '../../models/Order';
+import ShoppingCartItem, { IShoppingCartItem } from '../ShoppingCartItem/ShoppingCartItem';
 
 interface IOrderItemProps {
     order: Order;
 }
 
 const OrderItem = (props: IOrderItemProps) => {
-    const {totalAmount, readableDate} = props.order;
+    const [showDetails, setShowDetails] = useState(false);
+    const {totalAmount, readableDate, items} = props.order;
     return (
         <View style={styles.wrapper}>
             <View style={styles.summary}>
@@ -16,11 +18,23 @@ const OrderItem = (props: IOrderItemProps) => {
                 <Text style={styles.date}>{readableDate}</Text>
             </View>
             <Button
-                title='Show Details'
+                title={`${!showDetails ? 'Show' : 'Hide'} Details`}
                 color={Theme.primary}
                 onPress={() => {
+                    setShowDetails((prevState: boolean) => !prevState);
                 }}
             />
+            {
+                showDetails &&
+                <View style={styles.detailItems}>
+                    {items.map((cartItem: IShoppingCartItem) => (
+                        <ShoppingCartItem
+                            key={cartItem.productId}
+                            product={cartItem}
+                        />
+                    ))}
+                </View>
+            }
         </View>
     );
 };
@@ -56,6 +70,9 @@ const styles = StyleSheet.create({
         fontFamily: 'open-sans',
         fontSize: 16,
         color: Theme.lightText
+    },
+    detailItems: {
+        width: '100%'
     }
 });
 
