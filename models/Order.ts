@@ -1,4 +1,5 @@
 import { IShoppingCartItem } from '../components/ShoppingCartItem/ShoppingCartItem';
+import moment from 'moment';
 
 export class Order {
     private _id: string;
@@ -43,5 +44,9 @@ export class Order {
 
     set date(value: Date) {
         this._date = value;
+    }
+
+    get readableDate() {
+        return moment(this._date).format('MMMM Do YYYY, hh:mm');
     }
 }

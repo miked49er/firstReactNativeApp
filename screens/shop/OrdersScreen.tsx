@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { IOrderState } from '../../store/reducers/order';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import ShopHeaderButton from '../../components/ShopHeaderButton/ShopHeaderButton';
+import OrderItem from '../../components/OrderItem/OrderItem';
 
 interface IOrdersScreenProps {
 
@@ -14,7 +15,11 @@ const OrdersScreen = (props: IOrdersScreenProps) => {
     return (
         <FlatList
             data={orders}
-            renderItem={itemData => <Text>{itemData.item.totalAmount}</Text>}
+            renderItem={itemData => (
+                <OrderItem
+                    order={itemData.item}
+                />
+            )}
         />
     );
 };
