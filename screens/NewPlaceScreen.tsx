@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, ScrollView, Button } from 'react-native';
 import { Colors } from '../constants/Colors';
+import { useDispatch } from 'react-redux';
+import { addPlace } from '../store/places-reducers';
+import { useNavigation } from '@react-navigation/native';
 
 interface INewPlaceScreenProps {
 
@@ -8,10 +11,14 @@ interface INewPlaceScreenProps {
 
 const NewPlaceScreen = (props: INewPlaceScreenProps) => {
     const [titleValue, setTitleValue] = useState('');
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     const titleChangeHandler = (text: string) => setTitleValue(text);
 
     const savePlaceHandler = () => {
+        dispatch(addPlace({place: {title: titleValue}}));
+        navigation.navigate('Places')
     };
 
     return (
