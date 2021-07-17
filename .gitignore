@@ -26,6 +26,7 @@ yarn-error.log
 # Sublime Text
 *.sublime-project
 *.sublime-workspace
+.idea
 
 # Xcode
 *.pbxuser

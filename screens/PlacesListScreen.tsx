@@ -1,15 +1,33 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
+import { selectPlaceList } from '../store/places-selectors';
+import PlaceItem from '../components/PlaceItem';
+import { useNavigation } from '@react-navigation/native';
 
 interface IPlacesListScreenProps {
 
 }
 
 const PlacesListScreen = (props: IPlacesListScreenProps) => {
+    const places = useSelector(selectPlaceList);
+    const navigation = useNavigation();
+
     return (
-        <View style={styles.wrapper}>
-            <Text>Places List Screen</Text>
-        </View>
+        <FlatList
+            data={places}
+            keyExtractor={item => item.id}
+            renderItem={itemData => (
+                <PlaceItem
+                    onSelect={() => {
+                        navigation.navigate('PlaceDetails', {placeTitle: itemData.item.title, placeId: itemData.item.id});
+                    }}
+                    title={itemData.item.title}
+                    address={''}
+                    image={''}
+                />
+            )}
+        />
     );
 };
 

@@ -8,7 +8,17 @@ import { Platform } from 'react-native';
 import { Colors } from '../constants/Colors';
 import HeaderButton from '../components/HeaderButton';
 
-const PlacesStack = createStackNavigator();
+interface PlacesNavigation extends Record<string, Record<string, unknown> | undefined> {
+    Places: undefined,
+    PlaceDetails: {
+        placeTitle: string,
+        placeId: string
+    },
+    NewPlace: undefined,
+    Map: undefined
+}
+
+const PlacesStack = createStackNavigator<PlacesNavigation>();
 
 export const PlacesNavigator = () => (
     <PlacesStack.Navigator
@@ -36,6 +46,9 @@ export const PlacesNavigator = () => (
         <PlacesStack.Screen
             name={'PlaceDetails'}
             component={PlaceDetailScreen}
+            options={({route}) => ({
+                headerTitle: route?.params?.placeTitle,
+            })}
         />
         <PlacesStack.Screen
             name={'NewPlace'}
